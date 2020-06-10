@@ -1,0 +1,7 @@
+import model SMEFTatNLO_U2_2_U3_3_cG_4F_LO_UFO-NLO
+
+generate g g > H j NP=2 [noborn=QCD]
+
+output ggF-SMEFTatNLO_1j
+
+

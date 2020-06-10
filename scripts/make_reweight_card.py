@@ -21,6 +21,7 @@ def PrintBlock(pars, vals, index):
         res.append('set %s %i %g' % (par['block'], par['index'], val))
     return res
 
+par_to_rw_json = {}
 
 with open(args.config) as jsonfile:
     cfg = json.load(jsonfile)
@@ -58,11 +59,19 @@ for i in range(len(pars)):
     for j in range(i + 1, len(pars)):
         # print i,j
         vals = list(initvals)
-        vals[i] = pars[i]['val']
-        vals[j] = pars[j]['val']
-        output.extend(PrintBlock(pars, vals, current_i))
+        vals[i] = (pars[i]['val'] + initvals[i]) / int(sys.argv[2]) * j
+        output.extend(PrintBlock(pars, vals, current_i))        
+        par_to_rw_json['rw%.4i'%current_i] = '%s %f' % (pars[i]['name'], vals[i])
         current_i += 1
 
+# for i in xrange(len(pars)):
+#     for j in xrange(i + 1, len(pars)):
+#         # print i,j
+#         vals = list(initvals)
+#         vals[i] = pars[i]['val']
+#         vals[j] = pars[j]['val']
+#         output.extend(PrintBlock(pars, vals, current_i))
+#         current_i += 1
 
 with open(args.output, 'w') as outfile:
         outfile.write('\n'.join(output))
