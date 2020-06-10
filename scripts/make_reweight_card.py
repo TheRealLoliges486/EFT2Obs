@@ -73,7 +73,13 @@ for i in range(len(pars)):
 #         output.extend(PrintBlock(pars, vals, current_i))
 #         current_i += 1
 
-with open(args.output, 'w') as outfile:
-        outfile.write('\n'.join(output))
 
-print('>> Created %s with %i reweighting points' % (args.output, current_i))
+if len(sys.argv) > 3:
+    with open(sys.argv[3], 'w') as outfile:
+            outfile.write('\n'.join(output))
+
+with open(sys.argv[3][:-3]+'json', 'w') as outfile:
+        outfile.write(json.dumps(par_to_rw_json, sort_keys=True, indent=4, separators=(',', ': ')))
+
+
+print '>> Created %s with %i reweighting points' % (sys.argv[3], current_i)
